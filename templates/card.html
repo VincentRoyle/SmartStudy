@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Flashcard - SmartStudy{% endblock %}
+
+{% block content %}
+
+<h1>Flashcard</h1>
+
+<h2>{{ flashcard[1] }}</h2>
+
+<p>{{ flashcard[2] }}</p>
+
+<p>Topic: {{ flashcard[3] }}</p>
+
+<a href="/cards">Back to Flashcards</a>
+
+{% endblock %}

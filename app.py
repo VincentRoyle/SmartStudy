@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+import sqlite3
 
 app = Flask(__name__)
 
@@ -15,31 +16,61 @@ def about():
 
 @app.route("/cards")
 def cards():
-    card_count = 12
+    connection = sqlite3.connect("smartstudy.db")
+    cursor = connection.cursor()
+
+    cursor.execute("SELECT * FROM flashcards")
+    flashcards = cursor.fetchall()
+
+    connection.close()
+
+    card_count = len(flashcards)
 
     return render_template(
         "cards.html",
+        flashcards=flashcards,
         card_count=card_count
     )
 
 @app.route("/cards/<int:card_id>")
 def card(card_id):
-    return f"You are viewing flashcard {card_id}."
+    connection = sqlite3.connect("smartstudy.db")
+    cursor = connection.cursor()
 
-@app.route("/cards/create", methods=["GET", "POST"])
+    cursor.execute(
+        "SELECT * FROM flashcards WHERE id = ?",
+        (card_id,)
+    )
+
+    flashcard = cursor.fetchone()
+
+    connection.close()
+
+    if flashcard is None:
+        return "Flashcard not found.", 404
+
+    return render_template(
+        "card.html",
+        flashcard=flashcard
+    )
+
+@app.route("/create-card", methods=["GET", "POST"])
 def create_card():
-
     if request.method == "POST":
-
         question = request.form["question"]
         answer = request.form["answer"]
         topic = request.form["topic"]
 
-        print("Question:", question)
-        print("Answer:", answer)
-        print("Topic:", topic)
+        connection = sqlite3.connect("smartstudy.db")
+        cursor = connection.cursor()
 
-        return "Flashcard received!"
+        cursor.execute(
+            "INSERT INTO flashcards (question, answer, topic) VALUES (?, ?, ?)",
+            (question, answer, topic)
+        )
+
+        connection.commit()
+        connection.close()
 
     return render_template("create_card.html")
 
