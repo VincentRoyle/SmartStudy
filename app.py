@@ -75,12 +75,26 @@ def create_card():
     return render_template("create_card.html")
 
 
-@app.route("/study")
+@app.route("/study", methods=["GET", "POST"])
 def study():
-    previous_card_id = request.args.get("previous", type=int)
+    previous_card_id = None
 
     connection = sqlite3.connect("smartstudy.db")
     cursor = connection.cursor()
+
+    if request.method == "POST":
+        previous_card_id = int(request.form["flashcard_id"])
+        correct = int(request.form["correct"])
+
+        cursor.execute(
+            "INSERT INTO study_attempts (flashcard_id, correct) VALUES (?, ?)",
+            (previous_card_id, correct)
+        )
+
+        connection.commit()
+
+    else:
+        previous_card_id = request.args.get("previous", type=int)
 
     if previous_card_id:
         cursor.execute(
@@ -100,7 +114,6 @@ def study():
         "study.html",
         flashcard=flashcard
     )
-
 @app.route("/test-form", methods=["GET", "POST"])
 def test_form():
 

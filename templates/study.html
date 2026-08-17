@@ -19,6 +19,18 @@
 
     <p>Topic: {{ flashcard[3] }}</p>
 
+    <form method="POST">
+        <input type="hidden" name="flashcard_id" value="{{ flashcard[0] }}">
+
+        <button type="submit" name="correct" value="1">
+            Correct
+        </button>
+
+        <button type="submit" name="correct" value="0">
+            Incorrect
+        </button>
+    </form>
+
     <a href="{{ url_for('study', previous=flashcard[0]) }}">
         Next Card
     </a>
