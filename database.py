@@ -15,6 +15,16 @@ cursor.execute("""
     )
 """)
 
+cursor.execute("""
+    CREATE TABLE IF NOT EXISTS study_attempts (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        flashcard_id INTEGER NOT NULL,
+        correct INTEGER NOT NULL,
+        studied_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (flashcard_id) REFERENCES flashcards(id)
+    )
+""")
+
 connection.commit()
 connection.close()
 
