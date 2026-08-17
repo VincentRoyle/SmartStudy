@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Test Form - SmartStudy{% endblock %}
+
+{% block content %}
+
+<h1>Test Form</h1>
+
+<form method="POST">
+
+    <label for="name">Your name:</label>
+
+    <input
+        type="text"
+        id="name"
+        name="name"
+    >
+
+    <button type="submit">Submit</button>
+
+</form>
+
+{% endblock %}

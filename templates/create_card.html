@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Create Flashcard - SmartStudy{% endblock %}
+
+{% block content %}
+
+<h1>Create Flashcard</h1>
+
+<form method="POST">
+
+    <div>
+        <label for="question">Question</label>
+        <input
+            type="text"
+            id="question"
+            name="question"
+            required
+        >
+    </div>
+
+    <div>
+        <label for="answer">Answer</label>
+        <textarea
+            id="answer"
+            name="answer"
+            required
+        ></textarea>
+    </div>
+
+    <div>
+        <label for="topic">Topic</label>
+        <input
+            type="text"
+            id="topic"
+            name="topic"
+            required
+        >
+    </div>
+
+    <button type="submit">Create Flashcard</button>
+
+</form>
+
+{% endblock %}
