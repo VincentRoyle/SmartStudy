@@ -10,14 +10,18 @@
     <h2>{{ flashcard[1] }}</h2>
 
     <button onclick="document.getElementById('answer').style.display = 'block'">
-    Show Answer
-</button>
+        Show Answer
+    </button>
 
-<p id="answer" style="display: none;">
-    {{ flashcard[2] }}
-</p>
+    <p id="answer" style="display: none;">
+        {{ flashcard[2] }}
+    </p>
 
     <p>Topic: {{ flashcard[3] }}</p>
+
+    <a href="{{ url_for('study') }}">
+        Next Card
+    </a>
 {% else %}
     <p>You don't have any flashcards yet.</p>
 {% endif %}
