@@ -19,7 +19,7 @@
 
     <p>Topic: {{ flashcard[3] }}</p>
 
-    <a href="{{ url_for('study') }}">
+    <a href="{{ url_for('study', previous=flashcard[0]) }}">
         Next Card
     </a>
 {% else %}

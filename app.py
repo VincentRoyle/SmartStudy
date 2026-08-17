@@ -77,10 +77,21 @@ def create_card():
 
 @app.route("/study")
 def study():
+    previous_card_id = request.args.get("previous", type=int)
+
     connection = sqlite3.connect("smartstudy.db")
     cursor = connection.cursor()
 
-    cursor.execute("SELECT * FROM flashcards ORDER BY RANDOM() LIMIT 1")
+    if previous_card_id:
+        cursor.execute(
+            "SELECT * FROM flashcards WHERE id != ? ORDER BY RANDOM() LIMIT 1",
+            (previous_card_id,)
+        )
+    else:
+        cursor.execute(
+            "SELECT * FROM flashcards ORDER BY RANDOM() LIMIT 1"
+        )
+
     flashcard = cursor.fetchone()
 
     connection.close()
