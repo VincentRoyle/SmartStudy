@@ -80,7 +80,7 @@ def study():
     connection = sqlite3.connect("smartstudy.db")
     cursor = connection.cursor()
 
-    cursor.execute("SELECT * FROM flashcards LIMIT 1")
+    cursor.execute("SELECT * FROM flashcards ORDER BY RANDOM() LIMIT 1")
     flashcard = cursor.fetchone()
 
     connection.close()
