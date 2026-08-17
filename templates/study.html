@@ -6,8 +6,20 @@
 
 <h1>Study Session</h1>
 
-<p>
-    Your study session will appear here.
+{% if flashcard %}
+    <h2>{{ flashcard[1] }}</h2>
+
+    <button onclick="document.getElementById('answer').style.display = 'block'">
+    Show Answer
+</button>
+
+<p id="answer" style="display: none;">
+    {{ flashcard[2] }}
 </p>
+
+    <p>Topic: {{ flashcard[3] }}</p>
+{% else %}
+    <p>You don't have any flashcards yet.</p>
+{% endif %}
 
 {% endblock %}

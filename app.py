@@ -77,7 +77,18 @@ def create_card():
 
 @app.route("/study")
 def study():
-    return render_template("study.html")
+    connection = sqlite3.connect("smartstudy.db")
+    cursor = connection.cursor()
+
+    cursor.execute("SELECT * FROM flashcards LIMIT 1")
+    flashcard = cursor.fetchone()
+
+    connection.close()
+
+    return render_template(
+        "study.html",
+        flashcard=flashcard
+    )
 
 @app.route("/test-form", methods=["GET", "POST"])
 def test_form():
